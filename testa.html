@@ -48,22 +48,41 @@ var pos=0;
 
 var position_x=0;
 var position_y=0;
+
+var obstaculos_x = new Array();
+var obstaculos_y = new Array();
+var lista = new Array();
+var meta_x;
+var meta_y;
 function myFunction()
 {
-  var lista = new Array();
+  meta_x=4;
+  meta_y=4;
+
   lista[0] = "derecha";
   lista[1] = "derecha";
   lista[2] = "abajo";
   lista[3] = "abajo";
-  lista[4] = "abajo";
-  lista[5] = "izquierda";
+  //lista[4] = "abajo";
+  //lista[5] = "izquierda";
+
+  lista[4] = "derecha";
+  lista[5] = "derecha";
+  lista[6] = "abajo";
+  lista[7] = "abajo";
+
+
+  obstaculos_x[0] = 2;
+  obstaculos_y[0] = 3;
+
+  obstaculos_x[1] = 1;
+  obstaculos_y[1] = 1;
 
   limpiarPantalla();
 
-  setInterval(
+  var onUpdate=setInterval(
     function()
     {
-      //limpiarPantalla();
       pintarCuadro("vacio",position_x,position_y);
       if(lista[pos]=="arriba")
       {
@@ -81,8 +100,24 @@ function myFunction()
       {
         position_x++;
       }
-      pos++;
+
       pintarCuadro("actual",position_x,position_y);
+
+      if(esObstaculo(position_x,position_y))
+      {
+        alert("obstaculo");
+      }
+
+      if(esMeta(position_x,position_y))
+      {
+        alert("meta");
+      }
+
+      pos++;
+      if(pos>=lista.length)
+      {
+        window.clearInterval(onUpdate)
+      }
     }
   ,500);
 }
@@ -99,6 +134,14 @@ function limpiarPantalla()
   	pintarCuadro("vacio",4,y);
     y++;
   }
+  var i=0;
+  while(i<2)
+  {
+    pintarCuadro("obstaculo",obstaculos_x[i],obstaculos_y[i]);
+    i++;
+  }
+  pintarCuadro("meta",meta_x,meta_y);
+  pintarCuadro("actual",position_x,position_y);
 }
 
 function pintarCuadro(tipo,col,row)
@@ -106,6 +149,25 @@ function pintarCuadro(tipo,col,row)
   var table = document.getElementById("myTable");
   var columna = document.getElementById("myTable").rows[row].cells;
   columna[col].innerHTML='<img src='+tipo+'.png></img>';
+}
+
+function esObstaculo(pos_x,pos_y)
+{
+  var i=0;
+  while(i<2)
+  {
+    if(pos_x==obstaculos_x[i] && pos_y==obstaculos_y[i])
+    {
+      return true;
+    }
+    i++;
+  }
+  return false;
+}
+
+function esMeta(pos_x,pos_y)
+{
+  return pos_x==meta_x && pos_y==meta_y;
 }
 
 </script>
