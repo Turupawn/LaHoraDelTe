@@ -146,16 +146,6 @@ var current_level=1;
 function inicializar()
 {
   pos=0;
-
-  lista[0] = "abajo";
-  lista[1] = "abajo";
-  lista[2] = "abajo";
-  lista[3] = "abajo";
-  lista[4] = "derecha";
-  lista[5] = "derecha";
-  lista[6] = "abajo";
-  lista[7] = "abajo";
-
   initLevel(current_level);
 }
 
@@ -166,6 +156,7 @@ function compile()
 
 function myFunction()
 {
+  inicializar();
   var onUpdate=setInterval(
     function()
     {
